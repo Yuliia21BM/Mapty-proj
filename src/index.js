@@ -1,5 +1,3 @@
-import * as L from 'leaflet';
-
 // prettier-ignore
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -30,7 +28,19 @@ if (navigator.geolocation) {
       map.on('click', mapEvent => {
         // console.log(mapEvent);
         const { lat, lng } = mapEvent.latlng;
-        L.marker([lat, lng]).addTo(map).bindPopup('Workout').openPopup();
+        L.marker([lat, lng])
+          .addTo(map)
+          .bindPopup(
+            L.popup({
+              maxWidth: 250,
+              maxHeight: 100,
+              autoClose: false,
+              closeOnClick: false,
+              className: 'running-popup',
+            })
+          )
+          .setPopupContent('Workout')
+          .openPopup();
       });
     },
     function () {
