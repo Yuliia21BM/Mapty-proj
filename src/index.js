@@ -26,7 +26,7 @@ class Workout {
     } ${this.date.getDate()}`;
   }
 
-  click() {
+  clicks() {
     this.clicks += 1;
   }
 }
@@ -109,6 +109,7 @@ class App {
 
     this.#workouts.forEach(work => {
       this._renderWorkoutMarker(work);
+      this._renderWorkout(work);
     });
   }
 
@@ -247,11 +248,9 @@ class App {
   _moveToPopup(e) {
     const workoutEl = e.target.closest('.workout');
     if (!workoutEl) return;
-    console.log(workoutEl);
     const workout = this.#workouts.find(
       work => work.id === workoutEl.dataset.id
     );
-    console.log(workout);
 
     this.#map.setView(workout.coords, this.#mapZoomLavel, {
       animate: true,
@@ -259,7 +258,7 @@ class App {
         duration: 1,
       },
     });
-    workout.click();
+    // workout.clicksf();
   }
 
   _setLocalStorage() {
@@ -270,10 +269,11 @@ class App {
     const data = JSON.parse(localStorage.getItem('workouts'));
     if (!data) return;
     this.#workouts = data;
-    this.#workouts.forEach(work => {
-      this._renderWorkout(work);
-      this._renderWorkoutMarker(work);
-    });
+  }
+
+  reset() {
+    localStorage.remove('workouts');
+    lacation.reload();
   }
 }
 
